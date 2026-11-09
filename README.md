@@ -1,40 +1,25 @@
-# Conversor-Bases-v2
+# Conversor para decimal
 
-Conversor de entradas binárias, octais, hexadecimais e vigesimais para o sistema decimal.
+Converte números binários, octais, hexadecimais e vigesimais para decimal pela avaliação posicional dos dígitos. A API também aceita base 4. Não usa bibliotecas externas.
 
-## Funcionalidades verificadas
-
-- Menu com bases 2, 8, 16 e 20.
-- Conversão de dígitos alfanuméricos.
-- Acumulação por potências da base.
-
-## Operação e arquitetura verificadas
-
-conversor.py separa menu e rotina de conversão; execução interativa sem dependências externas.
-
-Arquivos principais: `conversor.py`.
-
-### Requisitos e execução
-
-Python 3; biblioteca padrão.
-
-```text
+```sh
 python conversor.py
+python -m unittest discover -s tests -v
 ```
 
+O menu mantém as quatro opções originais. Uma opção ou um dígito inválido recebe mensagem e nova tentativa; EOF e interrupção encerram a execução. Importar o módulo não inicia interação.
 
+```python
+from conversor import to_decimal
+assert to_decimal("10101", 2) == 21
+assert to_decimal("ff", 16) == 255
+assert to_decimal("-J", 20) == -19
+```
 
-### Testes e estado
+`to_decimal(texto, base)` valida cada dígito contra a base, aceita letras sem distinguir caixa, sinal opcional e espaços externos. Não aceita prefixos como `0x`, separadores internos ou frações. `conversao(valor, opt)` preserva a impressão do exemplo original e devolve o inteiro.
 
-Não foi identificada uma suíte automatizada específica para os fluxos descritos; valide a execução e os casos de borda antes de publicar.
+Quatro testes verificam dígitos, zero, sinais, letras minúsculas, entradas vazias/inválidas e resultados contra o parser de referência do Python. A correção removeu condições booleanas que sempre eram verdadeiras, como `if opt == 16 or 20`.
 
-Estado: projeto de estudo/experimental. Deploy ativo não foi confirmado nesta revisão.
+Aplicação de console Python 3. A distribuição é o código Python com sua licença MIT (`LICENSE`); não há site ou serviço externo.
 
-### Limitações conhecidas
-
-- O menu não oferece base 4.
-- Condições como opt == 16 or 20 são sempre verdadeiras e dígitos fora da base não são rejeitados.
-
-### Licença e manutenção
-
-Nenhum arquivo de licença foi identificado nesta revisão; não foi adicionada uma nova licença. Atualize comandos e limitações quando houver mudança de comportamento.
+Memória técnica: `docs/ai-context/QUALITY_REFRESH.md`.
